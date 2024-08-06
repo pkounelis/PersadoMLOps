@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+transformers
+torch
+locust
+redis[asyncio]
+prometheus_client

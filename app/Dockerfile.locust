@@ -1,0 +1,17 @@
+# Use a minimal Python image
+FROM python:3.11-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the Locustfile and any other necessary files
+COPY locustfile.py /app/
+
+# Install Locust
+RUN pip install locust
+
+# Expose port 8089 for Locust web interface
+EXPOSE 8089
+
+# Set the default command to run Locust
+CMD ["locust", "-f", "locustfile.py"]
