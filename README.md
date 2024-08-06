@@ -14,21 +14,21 @@ POST: http://localhost:8000/suggest
 
 Authorization:
 
-Type: Basic Auth
+  Type: Basic Auth
 
-Username: admin
+  Username: admin
 
-Password: secret
+  Password: secret
 
 Body:
 
-Select: raw Text
+  Select: raw Text
 
-Write a sentence with a <blank> placeholder
+  Write a sentence with a <blank> placeholder
 
-alternatively invoke from command prompt:
+  alternatively invoke from command prompt:
 
-curl -X POST "http://localhost:8000/suggest" -H "Content-Type: text/plain" -d "have a <blank> day" -u admin:secret
+  curl -X POST "http://localhost:8000/suggest" -H "Content-Type: text/plain" -d "have a <blank> day" -u admin:secret
 
 ### Access metrics:
 
