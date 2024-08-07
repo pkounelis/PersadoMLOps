@@ -1,14 +1,25 @@
 # How to run:
+
+### Download models
+
+```
+python download_models.py
+```
 <p>&nbsp;</p>
 
 ### Build images
 
+```
+cd app
 docker-compose build
+```
 <p>&nbsp;</p>
 
 ### Start container
 
+```
 docker-compose up
+```
 <p>&nbsp;</p>
 
 ### Send requests with Postman:
@@ -31,7 +42,9 @@ Body:
 
 ### Alternatively invoke from command prompt:
 
+```
 curl -X POST "http://localhost:8000/suggest" -H "Content-Type: text/plain" -d "have a <blank> day" -u admin:secret
+```
 <p>&nbsp;</p>
 
 ### Access metrics:
@@ -71,7 +84,7 @@ Configure host:
 > http://app-fastapi-app-1:8000
 <p>&nbsp;</p>
 
-### Future work:
+# Future work:
 - Test jenkins_pipeline.groovy (integrate git with jenkins in order to checkout the repo)
 - Implement better authentication (OAuth2)
 - Deployment scripts and configurations that demonstrate how you would do load balancing of requests to increase scalability (e.g. with Kubernetes)
