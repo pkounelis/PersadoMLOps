@@ -84,6 +84,13 @@ Configure host:
 > http://app-fastapi-app-1:8000
 <p>&nbsp;</p>
 
+### API Documentation
+
+Swagger UI: http://localhost:8000/docs
+
+ReDoc: http://localhost:8000/redoc
+<p>&nbsp;</p>
+
 # Future work:
 - Test jenkins_pipeline.groovy (integrate git with jenkins in order to checkout the repo)
 - Implement better authentication (OAuth2)
