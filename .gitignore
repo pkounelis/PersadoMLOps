@@ -1,0 +1,12 @@
+# Virtual environment
+.venv/
+
+# __pycache__ directories
+**/__pycache__/
+
+# Models directory
+app/models/
+
+# Logs
+app/logs/
+**/*.log
