@@ -2,8 +2,10 @@ import os
 from transformers import pipeline
 
 # Define paths for saving the models
-fill_mask_path = "./app/models/fill-mask"
-sentiment_analysis_path = "./app/models/sentiment-analysis"
+fill_mask_path = os.path.join(
+    os.path.dirname(__file__), 'app/models/fill-mask')
+sentiment_analysis_path = os.path.join(
+    os.path.dirname(__file__), 'app/models/sentiment-analysis')
 
 # Create directories if they don't exist
 os.makedirs(fill_mask_path, exist_ok=True)

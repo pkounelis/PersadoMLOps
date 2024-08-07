@@ -22,7 +22,7 @@ async def authenticate(credentials: HTTPBasicCredentials = Depends(security)):
     return credentials
 
 # Ensure the logs directory exists
-log_directory = './logs'
+log_directory = os.path.join(os.path.dirname(__file__), 'logs')
 if not os.path.exists(log_directory):
     os.makedirs(log_directory)
 
@@ -59,8 +59,10 @@ redis_host = os.getenv('REDIS_HOST', 'localhost')
 redis_port = int(os.getenv('REDIS_PORT', 6379))
 
 # Define paths to local model directories
-fill_mask_model_path = "./models/fill-mask"
-sentiment_analysis_model_path = "./models/sentiment-analysis"
+fill_mask_model_path = os.path.join(
+    os.path.dirname(__file__), 'models/fill-mask')
+sentiment_analysis_model_path = os.path.join(
+    os.path.dirname(__file__), 'models/sentiment-analysis')
 
 # Load pre-trained models from local path
 mlm = pipeline("fill-mask", model=fill_mask_model_path)
