@@ -19,8 +19,8 @@ services:
     environment:
       - BASIC_AUTH_USERNAME=${BASIC_AUTH_USERNAME}
       - BASIC_AUTH_PASSWORD=${BASIC_AUTH_PASSWORD}
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
     networks:
       - app-network
 
