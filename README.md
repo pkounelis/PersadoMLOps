@@ -33,8 +33,7 @@ C:\Windows\System32
 ### Build images
 
 ```
-cd app
-docker-compose build
+docker-compose -f app/docker-compose.yml build
 ```
 
 <p>&nbsp;</p>
@@ -42,7 +41,7 @@ docker-compose build
 ### Start container
 
 ```
-docker-compose up
+docker-compose -f app/docker-compose.yml up
 ```
 
 <p>&nbsp;</p>
