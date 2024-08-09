@@ -3,15 +3,37 @@ pipeline {
 
     environment {
         // Set environment variables for Docker registry credentials
+        PYTHON_PATH = 'C:\\Users\\panos\\AppData\\Local\\Programs\\Python\\Python311\\python.exe'
+        MODELS_DOWNLOAD_SCRIPT = 'download_models.py'
         DOCKER_REGISTRY_CREDENTIALS = credentials('docker-registry-credentials')
-        DOCKER_COMPOSE_FILE = 'docker-compose.yml'
+        DOCKER_COMPOSE_FILE = 'app/docker-compose.yml'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout code from the repository
-                git 'https://github.com/pkounelis/PersadoMLOps.git/'
+                // Increase Git buffer size
+                bat 'git config --global http.postBuffer 524288000'
+                // Use credentials to clone the repository
+                git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/pkounelis/PersadoMLOps.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    // Install Python dependencies
+                    bat "${env.PYTHON_PATH} -m pip install transformers torch --timeout=120"
+                }
+            }
+        }
+
+        stage('Download Models') {
+            steps {
+                script {
+                    // Execute script to download models
+                    bat "${env.PYTHON_PATH} ${env.MODELS_DOWNLOAD_SCRIPT}"
+                }
             }
         }
 
@@ -19,7 +41,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker images using docker-compose
-                    sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} build'
+                    bat "docker-compose -f ${env.DOCKER_COMPOSE_FILE} build"
                 }
             }
         }
@@ -27,10 +49,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Push Docker images to the registry
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker-registry-credentials') {
-                        sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} push'
-                    }
+                    bat "docker login -u ${env.DOCKER_REGISTRY_CREDENTIALS_USR} -p ${env.DOCKER_REGISTRY_CREDENTIALS_PSW}"
+                    bat "docker-compose -f ${env.DOCKER_COMPOSE_FILE} push"
                 }
             }
         }
@@ -39,7 +59,7 @@ pipeline {
             steps {
                 script {
                     // Clean up local Docker images to free space
-                    sh 'docker-compose -f ${DOCKER_COMPOSE_FILE} down --rmi all'
+                    bat "docker-compose -f ${env.DOCKER_COMPOSE_FILE} down --rmi all"
                 }
             }
         }
