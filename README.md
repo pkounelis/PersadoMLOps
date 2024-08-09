@@ -116,6 +116,6 @@ Configure host:
 
 # Future work:
 
-- Test jenkins_pipeline.groovy (integrate git with jenkins in order to checkout the repo)
+- Test jenkins_pipeline.groovy
 - Implement better authentication (OAuth2)
 - Deployment scripts and configurations that demonstrate how you would do load balancing of requests to increase scalability (e.g. with Kubernetes)
