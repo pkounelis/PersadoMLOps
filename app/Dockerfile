@@ -10,6 +10,9 @@ COPY . /app
 # Copy the models directory
 COPY models /app/models
 
+# Increase pip timeout
+ENV PIP_DEFAULT_TIMEOUT=100
+
 # Upgrade pip to the latest version
 RUN pip install --no-cache-dir --upgrade pip
 
