@@ -2,14 +2,14 @@
 
 services:
   redis:
-    image: docker.io/pkounelis/persadomlops/redis:latest
+    image: pkounelis/persadomlops/redis:latest
     ports:
       - "6379:6379"
     networks:
       - app-network
 
   fastapi-app:
-    image: docker.io/pkounelis/persadomlops/fastapi-app:latest
+    image: pkounelis/persadomlops/fastapi-app:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -26,7 +26,7 @@ services:
       - app-network
 
   locust:
-    image: docker.io/pkounelis/persadomlops/locust:latest
+    image: pkounelis/persadomlops/locust:latest
     build:
       context: .
       dockerfile: Dockerfile.locust
@@ -38,7 +38,7 @@ services:
       - app-network
 
   prometheus:
-    image: docker.io/pkounelis/persadomlops/prometheus:latest
+    image: pkounelis/persadomlops/prometheus:latest
     ports:
       - "9090:9090"
     volumes:
@@ -47,7 +47,7 @@ services:
       - app-network
 
   grafana:
-    image: docker.io/pkounelis/persadomlops/grafana:latest
+    image: pkounelis/persadomlops/grafana:latest
     ports:
       - "3000:3000"
     networks:
