@@ -5,15 +5,13 @@ pipeline {
         // Set environment variables for Docker registry credentials
         PYTHON_PATH = 'C:\\Users\\panos\\AppData\\Local\\Programs\\Python\\Python311\\python.exe'
         MODELS_DOWNLOAD_SCRIPT = 'download_models.py'
-        DOCKER_REGISTRY_CREDENTIALS = credentials('docker-registry-credentials')
         DOCKER_COMPOSE_FILE = 'app/docker-compose.yml'
+        DOCKER_REGISTRY_CREDENTIALS = credentials('docker-registry-credentials')
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Increase Git buffer size
-                bat 'git config --global http.postBuffer 524288000'
                 // Use credentials to clone the repository
                 git branch: 'main', credentialsId: 'github-credentials', url: 'https://github.com/pkounelis/PersadoMLOps.git'
             }
@@ -49,20 +47,20 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    bat "docker login -u ${env.DOCKER_REGISTRY_CREDENTIALS_USR} -p ${env.DOCKER_REGISTRY_CREDENTIALS_PSW}"
+                    bat "docker login -u ${env.DOCKER_REGISTRY_CREDENTIALS_USR} -p ${env.DOCKER_REGISTRY_CREDENTIALS_PSW} docker.io"
                     bat "docker-compose -f ${env.DOCKER_COMPOSE_FILE} push"
                 }
             }
         }
 
-        stage('Clean Up') {
-            steps {
-                script {
-                    // Clean up local Docker images to free space
-                    bat "docker-compose -f ${env.DOCKER_COMPOSE_FILE} down --rmi all"
-                }
-            }
-        }
+        //stage('Clean Up') {
+        //    steps {
+        //        script {
+        //            // Clean up local Docker images to free space
+        //            bat "docker-compose -f ${env.DOCKER_COMPOSE_FILE} down --rmi all"
+        //        }
+        //    }
+        //}
     }
 
     post {
